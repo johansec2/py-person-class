@@ -18,7 +18,7 @@ def create_person_list(people: dict) -> list:
         # Check if there's a wife or husband key
         if "wife" in person_dict and person_dict.get("wife") is not None:
             person.wife = Person.people[person_dict.get("wife")]
-        elif ("husband" in person_dict 
+        elif ("husband" in person_dict
               and person_dict.get("husband") is not None):
             person.husband = Person.people[person_dict.get("husband")]
 
