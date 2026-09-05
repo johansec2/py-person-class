@@ -1,7 +1,7 @@
 class Person:
     people = {}
 
-    def __init__(self, name: str, age: int):
+    def __init__(self, name: str, age: int) -> None:
         self.name = name
         self.age = age
         Person.people[name] = self
@@ -18,7 +18,8 @@ def create_person_list(people: dict) -> list:
         # Check if there's a wife or husband key
         if "wife" in person_dict and person_dict.get("wife") is not None:
             person.wife = Person.people[person_dict.get("wife")]
-        elif "husband" in person_dict and person_dict.get("husband") is not None:
+        elif ("husband" in person_dict 
+              and person_dict.get("husband") is not None):
             person.husband = Person.people[person_dict.get("husband")]
 
         result.append(person)
