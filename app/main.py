@@ -12,7 +12,10 @@ def create_person_list(people: list[dict]) -> list:
     Person.people = {}
 
     # First pass: create all Person instances using a list comprehension
-    result: list[Person] = [Person(p.get("name"), p.get("age")) for p in people]
+    result: list[Person] = [
+        Person(p.get("name"), p.get("age"))
+        for p in people
+    ]
 
     # Second pass: assign spouse relationships (lookups will succeed now)
     for person_dict in people:
