@@ -7,21 +7,24 @@ class Person:
         Person.people[name] = self
 
 
-def create_person_list(people: dict) -> list:
-    result = []
+def create_person_list(people: list[dict]) -> list:
+    # Reset class-level registry to avoid leaking state between calls/tests
+    Person.people = {}
+
+    # First pass: create all Person instances using a list comprehension
+    result: list[Person] = [Person(p.get("name"), p.get("age")) for p in people]
+
+    # Second pass: assign spouse relationships (lookups will succeed now)
     for person_dict in people:
         name = person_dict.get("name")
-        age = person_dict.get("age")
-        # Create the Person instance (it will be added to Person.people)
-        person = Person(name, age)
+        person = Person.people.get(name)
 
-        # Check if there's a wife or husband key
-        if "wife" in person_dict and person_dict.get("wife") is not None:
-            person.wife = Person.people[person_dict.get("wife")]
-        elif ("husband" in person_dict
-              and person_dict.get("husband") is not None):
-            person.husband = Person.people[person_dict.get("husband")]
+        wife_name = person_dict.get("wife")
+        if wife_name is not None:
+            person.wife = Person.people.get(wife_name)
 
-        result.append(person)
+        husband_name = person_dict.get("husband")
+        if husband_name is not None:
+            person.husband = Person.people.get(husband_name)
 
     return result
